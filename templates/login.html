@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>记帐程序</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="row" style="padding-top: 10%">
+        <div class="col-xs-4 col-md-offset-4">
+            <div style="text-align: center"><h2>记帐程序</h2></div>
+            <form action="{{ url_for('login') }}" method="post" role="form" class="bs-example bs-example-form">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                    <input type="text" name="user_id" class="form-control" data-toggle="tooltip" data-placement="top"/>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-briefcase"></span></span>
+                    <input type="password" name="password" class="form-control" data-toggle="tooltip" data-placement="top"/>
+                </div>
+                <br>
+                <div style="text-align: center">
+                    <input type="submit" class="btn btn-success" value="登录" style="text-shadow: black 3px 3px 3px;">
+                </div>
+            </form>
+        </div>
+    </div>
+    {% if msg %}
+        <p class="error"><strong>{{ msg }}</strong></p>
+    {% endif %}
+    <script>
+	    $(function () { $("[data-toggle='tooltip']").tooltip(); });
+    </script>
+</body>
+</html>

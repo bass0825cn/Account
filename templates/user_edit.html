@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h2>用户管理</h2>
+    <div class="page">
+        <form action="/user_edit" method="POST" name="edit" role="form">
+            {{ form.hidden_tag() }}
+            <table>
+                <tr>
+                    <td>用户名：</td>
+                    <td>{{ form.user_id(class='form-control') }}</td>
+                </tr>
+                <tr>
+                    <td>密码：</td>
+                    <td>{{ form.password(class='form-control') }}</td>
+                </tr>
+                <tr>
+                    <td>姓名：</td>
+                    <td>{{ form.user_name(class='form-control') }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="保存" class="btn btn-info"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    {% if msg %}
+        <p class="error"><strong>{{ msg }}</strong></p>
+    {% endif %}
+{% endblock %}

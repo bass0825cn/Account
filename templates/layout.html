@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>记帐程序</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="padding:60px">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">记帐程序</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-book"></span> 基础字典管理<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">记帐科目维护</a></li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{{ url_for('user_list') }}">
+                                    <span class="glyphicon glyphicon-user"></span> 用户信息维护
+                                </a>
+                            </li>
+                            <li><a href="#">角色信息维护</a></li>
+                            <li><a href="#">用户授权</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-right navbar-nav">
+                {% if session.user_name %}
+                <li class="active"><p class="navbar-text">欢迎，{{ session.user_name }}</p></li>
+                {% endif %}
+                {% if not session.logged_in %}
+                <li class="active"><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                {% else %}
+                <li class="active"><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    {% block body %}{% endblock %}
+
+    {% for msg in get_flashed_messages() %}
+        <div class="alert alert-success text-center">{{ msg }}</div>
+    {% endfor %}
+</body>
+</html>
