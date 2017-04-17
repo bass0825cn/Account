@@ -2,7 +2,7 @@
 # 上面用于python支持中文
 from run import app, db
 from flask import render_template, redirect, url_for, session, g, flash
-from flask import request
+from flask import request, jsonify
 import models
 from forms import UserForm
 
@@ -120,3 +120,13 @@ def user_delete(user_id=None):
 @app.route('/test_bootstrap')
 def test_bootstrap():
     return render_template('test_bootstrap.html')
+
+
+@app.route('/AjaxCheckUser', methods=['GET', 'POST'])
+def ajax_check_user():
+    msg = ''
+    if request.method == 'POST':
+        user = models.User.query.get(request.form['user_id'])
+        if not user is None:
+            msg = '该用户已存在！'
+    return jsonify(msg=msg)
