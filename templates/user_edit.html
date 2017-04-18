@@ -7,7 +7,7 @@
             <table>
                 <tr>
                     <td>用户名：</td>
-                    <td>{{ form.user_id(id='user_id', class='form-control', onblur="return ajaxForm('#user_id')") }}</td>
+                    <td>{{ form.user_id(id='user_id', class='form-control', onblur="check_user()") }}</td>
                     <td id="msg_user_id"></td>
                 </tr>
                 <tr>
@@ -28,4 +28,23 @@
     {% if msg %}
         <p class="error"><strong>{{ msg }}</strong></p>
     {% endif %}
+    <script>
+        function check_user(){
+            if check_null(){
+                $('#msg_user_id').text('用户名不能为空！');
+            }else{
+                var vData;
+                vData = {user_id: $(this).val()};
+                vUrl = '{{ url_for('ajax_check_user') }}';
+                ajaxForm(vUrl, '#msg_user_id', vData);
+            }
+        }
+        function check_null() {
+            if $(this).val() == ''{
+                return true;
+            }else{
+                return false;
+            }
+        }
+    </script>
 {% endblock %}

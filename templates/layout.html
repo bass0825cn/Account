@@ -8,16 +8,13 @@
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        function ajaxForm(objId){
-            var vUserID = $(objId).val();
+        function ajaxForm(vUrl, vShowId, vData){
             $.ajax({
                 type: 'post',
-                url: '/AjaxCheckUser',
-                data: {
-                    user_id: vUserID
-                },
+                url: vUrl,
+                data: vData,
                 success: function(data){
-                    $('#msg_user_id').text(data.msg);
+                    $(vShowId).text(data.msg);
                 }
             });
         }
