@@ -2,25 +2,27 @@
 {% block body %}
     <h2>用户管理</h2>
     <div class="page">
-        <form action="/user_edit" method="POST" name="edit" role="form">
+        <form action="/user_edit" method="POST" name="edit" role="form" onsubmit="return check()">
             {{ form.hidden_tag() }}
             <table>
                 <tr>
                     <td>用户名：</td>
-                    <td>{{ form.user_id(id='user_id', class='form-control', onblur="check_user()") }}</td>
+                    <td>{{ form.user_id(id='user_id', class='form-control', onblur="check_user('#user_id')", disabled='disabled') }}</td>
                     <td id="msg_user_id"></td>
                 </tr>
                 <tr>
                     <td>密码：</td>
-                    <td>{{ form.password(class='form-control') }}</td>
+                    <td>{{ form.password(class='form-control', type='password') }}</td>
+                    <td id="msg_password"></td>
                 </tr>
                 <tr>
                     <td>姓名：</td>
                     <td>{{ form.user_name(class='form-control') }}</td>
+                    <td id="msg_user_name"></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="保存" class="btn btn-info"/></td>
+                    <td><input id="submit" type="submit" value="保存" class="btn btn-info"/></td>
                 </tr>
             </table>
         </form>
@@ -29,22 +31,32 @@
         <p class="error"><strong>{{ msg }}</strong></p>
     {% endif %}
     <script>
-        function check_user(){
-            if check_null(){
+        function check_user(vObjID){
+            if (check_null(vObjID)){
                 $('#msg_user_id').text('用户名不能为空！');
             }else{
                 var vData;
-                vData = {user_id: $(this).val()};
+                vData = {user_id: $('#user_id').val()};
                 vUrl = '{{ url_for('ajax_check_user') }}';
                 ajaxForm(vUrl, '#msg_user_id', vData);
             }
         }
-        function check_null() {
-            if $(this).val() == ''{
+        function check_null(vObjID) {
+            if ($(vObjID).val() == ''){
                 return true;
             }else{
                 return false;
             }
+        }
+        function check(){
+            var vItems = $("td[id^='msg_']");
+            for (var i = 0; i < vItems.length; i++){
+                if (vItems[i].text != ''){
+                    alert('信息填写有错误！请查看错误信息。');
+                    return false;
+                }
+            }
+            return true;
         }
     </script>
 {% endblock %}
